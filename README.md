@@ -370,6 +370,16 @@ DB_PATH=
 
 ---
 
+## 📚 Documentation
+
+Detailed documentation is available in the `docs` directory:
+
+- [Architecture](docs/architecture.md) – System architecture and components
+- [Development](docs/development.md) – Development setup and guidelines
+- [Telegram Bot](docs/telegram-bot.md) – Telegram trading bot usage and internals
+
+---
+
 ## 📈 Performance
 
 - Near-instant trade execution via Telegram bot and optimized backend
