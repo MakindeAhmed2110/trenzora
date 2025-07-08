@@ -236,6 +236,25 @@ class TrenzoraDecisionEngine {
 
 ---
 
+### 4. AI Architecture
+```plaintext
+┌──────────────────────┐    ┌────────────────────┐    ┌────────────────────┐
+│ Zora Data & Signals  │───▶│ Intelligence Engine│───▶│ Strategy Engine    │
+│ - Trending Coins     │    │ (Decision Making)  │    │ (Execution Logic)  │
+│ - Price/Volume       │    │                        │    │ - Trade/Alert Flow │
+│ - Social Sentiment   │    │                        │    │ - User Actions     │
+└──────────────────────┘    └────────────────────┘    └────────────────────┘
+         ▲                        │                        │
+         │                        ▼                        ▼
+┌──────────────────────┐    ┌────────────────────┐    ┌────────────────────┐
+│ Market Analytics     │    │   Risk Management  │    │  Performance       │
+│ - Statistics         │────▶ - Confidence/Risk  │────▶  Tracking &        │
+│ - Patterns           │    │   Levels           │    │  Learning          │
+└──────────────────────┘    └────────────────────┘    └────────────────────┘
+```
+
+---
+
 ## Agent Flow Structure
 - **Startup:** On bot start, agent scans trending coins and sends analysis.
 - **Manual Trigger:** Users can run `/trending` or `/quicktrending` for instant analysis.
@@ -262,7 +281,7 @@ trenzora/
   │   │   ├── types/          # TypeScript types
   │   │   └── utils/          # Helpers, constants, formatters
   │   ├── index.ts            # Bot entry point
-  │   └── README.md
+  │   └── README.md           # Detailed README for the Trenzora Trading Bot
   └── README.md
 ```
 
@@ -271,23 +290,6 @@ trenzora/
 - `src/commands/`: Telegram bot commands (buy, sell, trending, etc.).
 - `src/lib/`: Core logic for swaps, database, history, encryption.
 - `src/app/`: Next.js frontend (UI, features, support, trending, etc.).
-
----
-
-## Agent Code Decision Flow (Simplified)
-
-```mermaid
-flowchart TD
-    Start([Start/Trigger])
-    Scan[Scan Trending Coins (Zora API)]
-    Analyze[Analyze Each Coin]
-    Score[Score: Price, Volume, Cap, Holders, Social]
-    Advice[Generate Buy/Sell Advice]
-    Alert[Send Analysis/Alert to User]
-    End([End])
-
-    Start --> Scan --> Analyze --> Score --> Advice --> Alert --> End
-```
 
 ---
 
