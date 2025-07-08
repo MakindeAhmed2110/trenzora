@@ -12,7 +12,7 @@ Crypto traders on Zora ecosystems struggle to:
 
 ---
 
-## 🟢 Solution
+## 💡 Solution
 
 Trenzora solves these challenges through three innovative components:
 
@@ -42,7 +42,7 @@ Trenzora solves these challenges through three innovative components:
 
 
 ## Trenzora Products & Key Features
-### 1. *Dexscreener**
+### 1. **Dexscreener**
 - Uses the `@zoralabs/coins-sdk` to fetch trending coins, price, volume, holders, and social data.
 - Analyzes coins for buy/sell signals based on price, volume, market cap, and social presence.
 
@@ -99,7 +99,7 @@ The Telegram Trading Bot is a TypeScript-based backend that allows users to trad
 
 ---
 
-### 3. **Alerts Agent**
+### 3. 🤖 **Alerts Agent**
 - Scans Zora trending coins automatically and on-demand.
 - Sends detailed analysis and buy/sell recommendations to users.
 - Notifies users instantly when a coin starts trending.
@@ -149,19 +149,21 @@ else if (coin.priceChange24h < -30) buyAdvice = "SELL";
 The core of Trenzora's alert agent is a multi-factor decision engine that analyzes each trending coin and generates actionable recommendations. Here’s a simplified version of the actual code:
 
 ```typescript
-class TrenzoraDecisionEngine {
+// telegram-trading-bot/agent/index.ts (actual implementation)
+export class TrenzoraAgent {
+  // ... constructor and other methods ...
+
   /**
-   * Analyze a trending coin and generate buy/sell/hold advice.
-   * Multi-factor scoring: price, volume, market cap, holders, social, risk.
+   * Analyze a coin and provide buy advice
    */
-  async analyzeCoin(coin: TrendingCoin): Promise<CoinAnalysis> {
+  private async analyzeCoin(coin: TrendingCoin): Promise<CoinAnalysis> {
     const reasoning: string[] = [];
     let buyAdvice: "STRONG_BUY" | "BUY" | "HOLD" | "SELL" | "STRONG_SELL" = "HOLD";
     let confidence = 50;
     let riskLevel: "LOW" | "MEDIUM" | "HIGH" = "MEDIUM";
     let potentialReturn = 0;
 
-    // Price momentum
+    // Analyze price change
     if (coin.priceChange24h > 50) {
       reasoning.push("🚀 Strong 24h price increase");
       buyAdvice = "STRONG_BUY";
@@ -178,7 +180,7 @@ class TrenzoraDecisionEngine {
       confidence += 10;
     }
 
-    // Volume
+    // Analyze volume
     if (coin.volume24h > 500000) {
       reasoning.push("💪 High trading volume");
       confidence += 10;
@@ -230,19 +232,24 @@ class TrenzoraDecisionEngine {
 ```
 
 **How it works:**
-- Combines price, volume, market cap, holders, and social data.
-- Assigns a buy/sell/hold recommendation with confidence and risk.
-- Returns reasoning for transparency and explainability.
+- The `TrenzoraAgent` class encapsulates the decision logic.
+- The `analyzeCoin` method scores each coin based on price, volume, market cap, holders, and social data.
+- Returns a recommendation, confidence, risk, and reasoning for transparency.
 
 ---
 
-### 4. AI Architecture
+### 4. 🤖 Alert Agent Architecture
+
+The Alert Agent is responsible for scanning, analyzing, and generating actionable recommendations on trending Zora coins. Its architecture is modular and data-driven, ensuring extensibility and transparency.
+
+#### Architecture Diagram
+
 ```plaintext
 ┌──────────────────────┐    ┌────────────────────┐    ┌────────────────────┐
 │ Zora Data & Signals  │───▶│ Intelligence Engine│───▶│ Strategy Engine    │
 │ - Trending Coins     │    │ (Decision Making)  │    │ (Execution Logic)  │
-│ - Price/Volume       │    │                        │    │ - Trade/Alert Flow │
-│ - Social Sentiment   │    │                        │    │ - User Actions     │
+│ - Price/Volume       │    │                    │    │ - Trade/Alert Flow │
+│ - Social Sentiment   │    │                    │    │ - User Actions     │
 └──────────────────────┘    └────────────────────┘    └────────────────────┘
          ▲                        │                        │
          │                        ▼                        ▼
@@ -252,6 +259,26 @@ class TrenzoraDecisionEngine {
 │ - Patterns           │    │   Levels           │    │  Learning          │
 └──────────────────────┘    └────────────────────┘    └────────────────────┘
 ```
+
+#### Section Breakdown
+
+- **Zora Data & Signals:**
+  - Sources trending coins, price, volume, and social sentiment data from Zora APIs and other feeds.
+
+- **Intelligence Engine (Decision Making):**
+  - Processes raw data, applies multi-factor scoring, and generates actionable insights.
+
+- **Strategy Engine (Execution Logic):**
+  - Converts insights into trade/alert flows and user-facing actions.
+
+- **Market Analytics:**
+  - Provides statistical analysis and pattern recognition to support decision making.
+
+- **Risk Management:**
+  - Assesses confidence and risk levels for each recommendation.
+
+- **Performance Tracking & Learning:**
+  - Monitors outcomes and adapts strategies for continuous improvement.
 
 ---
 
@@ -377,6 +404,7 @@ Detailed documentation is available in the `docs` directory:
 - [Architecture](docs/architecture.md) – System architecture and components
 - [Development](docs/development.md) – Development setup and guidelines
 - [Telegram Bot](docs/telegram-bot.md) – Telegram trading bot usage and internals
+- [Dexscreener](docs/dexscreener.md) – Dexscreener architecture
 
 ---
 
@@ -415,6 +443,13 @@ Detailed documentation is available in the `docs` directory:
    - Early access to trending Zora coins
    - Automated alerts and buy/sell recommendations
    - Secure, mobile-first trading experience
+
+## 📢 Stay Connected
+Follow us for updates, insights, and behind-the-scenes development:
+
+🐦 Follow us on X: [@Trenzora](https://x.com/trenzora)
+
+🤖 Try Trenzora Trading Bot: [@Trenzora_bot](https://t.me/trenzora_bot)
 
 ## 📄 License
 
