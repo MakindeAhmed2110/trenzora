@@ -1,11 +1,9 @@
 import Image from "next/image";
+import Home from "@/components/layout/home";
 
-export default function Home() {
+
+export default function HomePage() {
   return (
-    <div>
-      
-          <h1>Discover Trending Tokens on Zora</h1>
-          <p>Trade them instantly</p>
-    </div>
-  );
+    <Home />
+  )
 }
