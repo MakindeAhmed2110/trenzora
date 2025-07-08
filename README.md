@@ -1,8 +1,8 @@
 # Trenzora 🚀
 
->>Trenzora is an all-in-one platform for discovering, analyzing, and trading trending Zora coins on Base. It combines real-time market intelligence, a powerful Telegram trading bot, and automated alerts to help users act fast and trade securely—right from their favorite messaging app.
+> Trenzora is an all-in-one platform for discovering, analyzing, and trading  trending Zora coins on Base. It combines real-time market intelligence, a powerful Telegram trading bot, and automated alerts to help users act fast and trade securely—right from their favorite messaging app.
 
-## Problem Statement
+## 🚩 Problem Statement
 Crypto traders on Zora ecosystems struggle to:
 - Discover trending coins in real time.
 - Act quickly on new opportunities.
@@ -12,7 +12,7 @@ Crypto traders on Zora ecosystems struggle to:
 
 ---
 
-## Solution
+## 🟢 Solution
 
 Trenzora solves these challenges through three innovative components:
 
@@ -35,8 +35,8 @@ Trenzora solves these challenges through three innovative components:
 
 ---
 
-## Trenzora Products
-- **Zora Coins Integration**
+## 🟢 Trenzora Products
+- **Dexscreener**
 - **Telegram Trading Bot**
 - **Alerts Agent**
 
@@ -144,6 +144,98 @@ else if (coin.priceChange24h < -30) buyAdvice = "SELL";
 
 ---
 
+## 🧠 Decision/Strategy Engine
+
+The core of Trenzora's alert agent is a multi-factor decision engine that analyzes each trending coin and generates actionable recommendations. Here’s a simplified version of the actual code:
+
+```typescript
+class TrenzoraDecisionEngine {
+  /**
+   * Analyze a trending coin and generate buy/sell/hold advice.
+   * Multi-factor scoring: price, volume, market cap, holders, social, risk.
+   */
+  async analyzeCoin(coin: TrendingCoin): Promise<CoinAnalysis> {
+    const reasoning: string[] = [];
+    let buyAdvice: "STRONG_BUY" | "BUY" | "HOLD" | "SELL" | "STRONG_SELL" = "HOLD";
+    let confidence = 50;
+    let riskLevel: "LOW" | "MEDIUM" | "HIGH" = "MEDIUM";
+    let potentialReturn = 0;
+
+    // Price momentum
+    if (coin.priceChange24h > 50) {
+      reasoning.push("🚀 Strong 24h price increase");
+      buyAdvice = "STRONG_BUY";
+      confidence += 20;
+      potentialReturn = 100;
+    } else if (coin.priceChange24h > 20) {
+      reasoning.push("📈 Good 24h price increase");
+      buyAdvice = "BUY";
+      confidence += 15;
+      potentialReturn = 50;
+    } else if (coin.priceChange24h < -30) {
+      reasoning.push("📉 Significant price decline");
+      buyAdvice = "SELL";
+      confidence += 10;
+    }
+
+    // Volume
+    if (coin.volume24h > 500000) {
+      reasoning.push("💪 High trading volume");
+      confidence += 10;
+    } else if (coin.volume24h < 10000) {
+      reasoning.push("⚠️ Low trading volume");
+      confidence -= 10;
+      riskLevel = "HIGH";
+    }
+
+    // Market cap
+    if (coin.marketCap < 1_000_000) {
+      reasoning.push("💰 Low market cap - high potential");
+      confidence += 15;
+      potentialReturn += 200;
+    } else if (coin.marketCap > 10_000_000) {
+      reasoning.push("🏢 High market cap - lower potential");
+      confidence -= 10;
+    }
+
+    // Holders
+    if (coin.holders > 1000) {
+      reasoning.push("👥 Good holder distribution");
+      confidence += 5;
+    } else if (coin.holders < 100) {
+      reasoning.push("⚠️ Low holder count - risky");
+      confidence -= 15;
+      riskLevel = "HIGH";
+    }
+
+    // Social presence
+    if (coin.twitter || coin.telegram) {
+      reasoning.push("📱 Active social presence");
+      confidence += 5;
+    }
+
+    // Normalize confidence
+    confidence = Math.max(0, Math.min(100, confidence));
+
+    return {
+      coin,
+      buyAdvice,
+      confidence,
+      reasoning,
+      riskLevel,
+      potentialReturn
+    };
+  }
+}
+```
+
+**How it works:**
+- Combines price, volume, market cap, holders, and social data.
+- Assigns a buy/sell/hold recommendation with confidence and risk.
+- Returns reasoning for transparency and explainability.
+
+---
+
 ## Agent Flow Structure
 - **Startup:** On bot start, agent scans trending coins and sends analysis.
 - **Manual Trigger:** Users can run `/trending` or `/quicktrending` for instant analysis.
@@ -153,7 +245,7 @@ else if (coin.priceChange24h < -30) buyAdvice = "SELL";
 
 ---
 
-## Codebase Architecture
+## 🏗 Codebase Architecture
 
 ### High-Level Structure
 ```
@@ -183,6 +275,7 @@ trenzora/
 ---
 
 ## Agent Code Decision Flow (Simplified)
+
 ```mermaid
 flowchart TD
     Start([Start/Trigger])
@@ -293,7 +386,7 @@ DB_PATH=
 - [x] Secure wallet management
 - [ ] Enhanced UI dashboard
 
-### Phase 2: Advanced Features (Q3 2024)
+### Phase 2: Advanced Features (Q4 2025)
 - [ ] Multi-chain and multi-DEX support
 - [ ] Advanced analytics and custom alerts
 - [ ] Social sentiment and news integration
@@ -317,4 +410,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-<p align="center">Built with ❤️ for Zora Coinathon 2024</p>
+<p align="center">Built with ❤️ for Zora Coinathon 2025</p>
